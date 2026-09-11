@@ -1,0 +1,69 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #FDFBF7;
+  color: #2C221E;
+  font-family: system-ui, 'Segoe UI', sans-serif;
+}
+
+/* Smooth transitions */
+* {
+  @apply transition-colors duration-200;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #8B5A2B;
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #5a3a1b;
+}
+
+/* Utility classes */
+.text-balance {
+  text-wrap: balance;
+}
+
+.book-cover {
+  @apply shadow-book hover:shadow-book-hover transition-shadow duration-300 rounded-lg overflow-hidden;
+}
+
+.btn-primary {
+  @apply px-4 py-2 bg-wood-dark text-white rounded-lg hover:bg-wood-light transition-colors duration-200;
+}
+
+.btn-secondary {
+  @apply px-4 py-2 border-2 border-wood-dark text-wood-dark rounded-lg hover:bg-wood-dark hover:text-white transition-colors duration-200;
+}
+
+.btn-ghost {
+  @apply px-4 py-2 text-wood-dark hover:bg-parchment rounded-lg transition-colors duration-200;
+}
+
+/* Gold accent for badges and highlights */
+.badge-gold {
+  @apply inline-block px-3 py-1 bg-accent-gold text-text-primary rounded-full text-sm font-semibold;
+}
