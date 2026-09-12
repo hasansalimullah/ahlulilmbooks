@@ -1,10 +1,9 @@
 'use client'
 
 import { useState, useMemo } from 'react'
-import Link from 'next/link'
 import { books } from '@/lib/data/books'
-import { useCart } from '@/lib/context/CartContext'
-import { Search, Filter, Star, ShoppingCart } from 'lucide-react'
+import { BookCard } from '@/components/BookCard'
+import { Search, Filter } from 'lucide-react'
 
 export default function BooksPage() {
   const [searchTerm, setSearchTerm] = useState('')
@@ -14,7 +13,6 @@ export default function BooksPage() {
   const [selectedBinding, setSelectedBinding] = useState<string>('')
   const [sortBy, setSortBy] = useState<string>('newest')
   const [isFilterOpen, setIsFilterOpen] = useState(false)
-  const { addItem } = useCart()
 
   const filteredBooks = useMemo(() => {
     let result = books
@@ -280,60 +278,7 @@ export default function BooksPage() {
             {filteredBooks.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {filteredBooks.map((book) => (
-                  <Link key={book.id} href={`/books/${book.id}`}>
-                    <div className="group cursor-pointer">
-                      <div className="mb-4 relative overflow-hidden rounded-lg book-cover h-80">
-                        <img
-                          src={book.image}
-                          alt={book.title}
-                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                        />
-                        {book.isNew && (
-                          <div className="absolute top-4 right-4">
-                            <span className="badge-gold">New</span>
-                          </div>
-                        )}
-                        {book.isBestseller && (
-                          <div className="absolute top-4 left-4">
-                            <span className="inline-block px-3 py-1 bg-red-500 text-white rounded-full text-xs font-bold">
-                              Bestseller
-                            </span>
-                          </div>
-                        )}
-                      </div>
-                      <h3 className="font-semibold text-text-primary group-hover:text-wood-dark transition-colors line-clamp-2">
-                        {book.title}
-                      </h3>
-                      <p className="text-text-muted text-sm mb-2">{book.author}</p>
-                      <div className="flex items-center gap-2 mb-3">
-                        <div className="flex items-center gap-1">
-                          {[...Array(5)].map((_, i) => (
-                            <Star
-                              key={i}
-                              className={`w-4 h-4 ${
-                                i < Math.round(book.rating)
-                                  ? 'fill-accent-gold text-accent-gold'
-                                  : 'text-border-warm'
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <span className="text-text-muted text-xs">({book.reviews})</span>
-                      </div>
-                      <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-border-warm">
-                        <span className="text-2xl font-bold text-wood-dark">${book.price}</span>
-                        <button
-                          onClick={(e) => {
-                            e.preventDefault()
-                            addItem(book.id, 1)
-                          }}
-                          className="p-2 bg-parchment hover:bg-wood-dark text-wood-dark hover:text-white rounded-lg transition-colors"
-                        >
-                          <ShoppingCart className="w-5 h-5" />
-                        </button>
-                      </div>
-                    </div>
-                  </Link>
+                  <BookCard key={book.id} book={book} />
                 ))}
               </div>
             ) : (

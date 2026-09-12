@@ -1,57 +1,31 @@
 import Link from 'next/link'
 import { BookOpen, ScrollText, Scroll, Users, Languages } from 'lucide-react'
+import { categories } from '@/lib/data/categories'
+
+const icons = {
+  aqeedah: BookOpen,
+  fiqh: ScrollText,
+  hadith: Scroll,
+  seerah: Users,
+  arabic: Languages,
+}
+
+const colors = {
+  aqeedah: 'from-wood-dark/10 to-wood-light/10',
+  fiqh: 'from-amber-100 to-orange-100',
+  hadith: 'from-amber-50 to-yellow-50',
+  seerah: 'from-orange-50 to-red-50',
+  arabic: 'from-amber-50 to-orange-50',
+}
 
 export function CategoriesGrid() {
-  const categories = [
-    {
-      id: 'aqeedah',
-      name: 'Aqeedah',
-      subtitle: 'Islamic Creed',
-      description: 'Foundational beliefs and theology',
-      icon: BookOpen,
-      color: 'from-wood-dark/10 to-wood-light/10',
-    },
-    {
-      id: 'fiqh',
-      name: 'Fiqh',
-      subtitle: 'Islamic Jurisprudence',
-      description: 'Laws and practices of Islam',
-      icon: ScrollText,
-      color: 'from-amber-100 to-orange-100',
-    },
-    {
-      id: 'hadith',
-      name: 'Hadith',
-      subtitle: 'Prophetic Traditions',
-      description: 'Sayings and actions of the Prophet',
-      icon: Scroll,
-      color: 'from-amber-50 to-yellow-50',
-    },
-    {
-      id: 'seerah',
-      name: 'Seerah',
-      subtitle: 'Biography',
-      description: 'Life of Prophet Muhammad',
-      icon: Users,
-      color: 'from-orange-50 to-red-50',
-    },
-    {
-      id: 'arabic',
-      name: 'Arabic',
-      subtitle: 'Language Studies',
-      description: 'Classical and modern Arabic',
-      icon: Languages,
-      color: 'from-amber-50 to-orange-50',
-    },
-  ]
-
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
       {categories.map((category) => {
-        const Icon = category.icon
+        const Icon = icons[category.id]
         return (
-          <Link key={category.id} href={`/books?category=${category.id}`}>
-            <div className={`p-6 rounded-lg cursor-pointer transition-all hover:shadow-book group bg-gradient-to-br ${category.color} border border-border-warm`}>
+          <Link key={category.id} href={`/categories/${category.id}`}>
+            <div className={`p-6 rounded-lg cursor-pointer transition-all hover:shadow-book group bg-gradient-to-br ${colors[category.id]} border border-border-warm`}>
               <div className="mb-4">
                 <Icon className="w-10 h-10 text-wood-dark group-hover:scale-110 transition-transform" />
               </div>
