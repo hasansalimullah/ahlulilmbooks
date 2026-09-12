@@ -4,7 +4,7 @@ import { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { books } from '@/lib/data/books'
 import { useCart } from '@/lib/context/CartContext'
-import { Search, Filter, Star, ShoppingCart } from 'lucide-react'
+import { Search, Filter, ChevronDown, Star, ShoppingCart } from 'lucide-react'
 
 export default function BooksPage() {
   const [searchTerm, setSearchTerm] = useState('')
