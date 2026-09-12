@@ -8,14 +8,17 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Library-inspired parchment and wood tones
-        parchment: '#FDFBF7',
-        'wood-light': '#A67C52',
-        'wood-dark': '#8B5A2B',
-        'text-primary': '#2C221E',
-        'text-muted': '#5A4A42',
-        'accent-gold': '#D4AF37',
-        'border-warm': '#E8DDD2',
+        // Classical espresso/scholarly theme
+        parchment: '#FFFFFF',
+        'section-bg': '#F9F8F6',
+        'wood-light': '#54413A',
+        'wood-dark': '#3B2B26',
+        'announce-dark': '#1E1E1E',
+        'text-primary': '#222222',
+        'text-muted': '#777777',
+        'accent-gold': '#C9A227',
+        'accent-sale': '#8B0000',
+        'border-warm': '#E5E5E5',
       },
       fontFamily: {
         sans: ['system-ui', 'Segoe UI', 'Helvetica', 'Arial', 'sans-serif'],

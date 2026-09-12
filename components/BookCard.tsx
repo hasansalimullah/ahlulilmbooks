@@ -18,40 +18,42 @@ export function BookCard({ book }: { book: Book }) {
     <>
       <Link href={`/books/${book.id}`}>
         <div className="group cursor-pointer">
-          <div className="mb-4 relative overflow-hidden rounded-lg book-cover h-80">
+          <div className="mb-4 relative overflow-hidden rounded-lg book-cover aspect-[3/4]">
             {/* Primary cover */}
             <img
               src={book.image}
               alt={book.title}
-              className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-0"
+              className="w-full h-full object-cover transition-all duration-300 group-hover:opacity-0 group-hover:scale-[1.03]"
             />
             {/* Secondary cover shown on hover, if available */}
             <img
               src={book.imageAlt || book.image}
               alt={book.title}
-              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 group-hover:scale-[1.03] transition-all duration-300"
             />
 
-            {book.isNew && (
-              <div className="absolute top-4 right-4">
-                <span className="badge-gold">New</span>
-              </div>
-            )}
-            {book.isBestseller && (
+            {/* Status badge: sale takes priority, then out-of-stock */}
+            {!book.inStock ? (
               <div className="absolute top-4 left-4">
-                <span className="inline-block px-3 py-1 bg-red-500 text-white rounded-full text-xs font-bold">
+                <span className="badge-stock">Out of Stock</span>
+              </div>
+            ) : book.originalPrice && book.originalPrice > book.price ? (
+              <div className="absolute top-4 left-4">
+                <span className="badge-sale">Sale</span>
+              </div>
+            ) : null}
+
+            <div className="absolute top-4 right-4 flex flex-col items-end gap-2">
+              {book.isNew && <span className="badge-gold">New</span>}
+              {book.isBestseller && (
+                <span className="inline-block px-3 py-1 bg-wood-dark text-white rounded-full text-xs font-bold">
                   Bestseller
                 </span>
-              </div>
-            )}
-            {!book.inStock && (
-              <div className="absolute bottom-0 left-0 right-0 bg-black/70 text-white text-center text-xs py-1.5 font-medium">
-                Out of Stock
-              </div>
-            )}
+              )}
+            </div>
 
             {/* Quick-action icons overlay */}
-            <div className="absolute top-4 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-10">
+            <div className="absolute top-20 right-4 flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200">
               <button
                 onClick={(e) => {
                   e.preventDefault()
@@ -142,19 +144,27 @@ export function BookCard({ book }: { book: Book }) {
             </div>
             <span className="text-text-muted text-xs">({book.reviews})</span>
           </div>
-          <div className="flex items-center justify-between bg-white p-3 rounded-lg border border-border-warm">
-            <span className="text-2xl font-bold text-wood-dark">${book.price}</span>
-            <button
-              onClick={(e) => {
-                e.preventDefault()
-                addItem(book.id, 1)
-              }}
-              disabled={!book.inStock}
-              className="p-2 bg-parchment hover:bg-wood-dark text-wood-dark hover:text-white rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-parchment disabled:hover:text-wood-dark"
-            >
-              <ShoppingCart className="w-5 h-5" />
-            </button>
+          <div className="mb-2">
+            {book.originalPrice && book.originalPrice > book.price ? (
+              <div className="flex items-baseline gap-2">
+                <span className="text-2xl font-bold text-accent-sale">${book.price}</span>
+                <span className="text-sm text-text-muted line-through">${book.originalPrice}</span>
+              </div>
+            ) : (
+              <span className="text-2xl font-bold text-wood-dark">${book.price}</span>
+            )}
           </div>
+          <button
+            onClick={(e) => {
+              e.preventDefault()
+              addItem(book.id, 1)
+            }}
+            disabled={!book.inStock}
+            className="w-full flex items-center justify-center gap-2 py-2.5 bg-wood-dark hover:bg-wood-light text-white font-semibold text-sm rounded-lg transition-colors disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-wood-dark"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            {book.inStock ? 'Add to Cart' : 'Out of Stock'}
+          </button>
         </div>
       </Link>
 

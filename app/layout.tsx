@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Header } from '@/components/Header'
 import { Footer } from '@/components/Footer'
+import { ContactBubble } from '@/components/ContactBubble'
 import { CartProvider } from '@/lib/context/CartContext'
 import './globals.css'
 
@@ -26,6 +27,7 @@ export default function RootLayout({
             </main>
             <Footer />
           </div>
+          <ContactBubble />
         </CartProvider>
       </body>
     </html>

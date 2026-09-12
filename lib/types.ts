@@ -3,9 +3,10 @@ export interface Book {
   title: string
   author: string
   price: number
+  originalPrice?: number // when set and higher than price, book is on sale
   image: string
   imageAlt?: string
-  category: 'aqeedah' | 'fiqh' | 'hadith' | 'seerah' | 'arabic'
+  category: 'aqeedah' | 'fiqh' | 'hadith' | 'quran-tafsir' | 'history' | 'muslim-family' | 'arabic'
   subcategory?: string
   description: string
   rating: number

@@ -17,12 +17,12 @@ export function StartHerePath() {
     intermediate: [
       { title: 'Fiqh of Islamic Banking & Finance', author: 'Dr. Muhammad Imran Ashraf Usmani', category: 'fiqh' },
       { title: 'Islamic Jurisprudence and its Methodology', author: 'Dr. Mustafa al-Zarqa', category: 'fiqh' },
-      { title: 'The Sealed Nectar: Biography of the Prophet', author: 'Safiur Rahman al-Mubarakpuri', category: 'seerah' },
+      { title: 'The Sealed Nectar: Biography of the Prophet', author: 'Safiur Rahman al-Mubarakpuri', category: 'history' },
     ],
     advanced: [
-      { title: 'Tafsir Ibn Kathir (10 Vol. Set)', author: 'Imam Ismail Ibn Kathir', category: 'aqeedah' },
+      { title: 'Tafsir Ibn Kathir (10 Vol. Set)', author: 'Imam Ismail Ibn Kathir', category: 'quran-tafsir' },
       { title: 'Sahih al-Bukhari (6 Vol. Set)', author: 'Imam Muhammad al-Bukhari', category: 'hadith' },
-      { title: 'The Qur\'an: A Contemporary Understanding', author: 'Dr. Muhammad Asad', category: 'aqeedah' },
+      { title: 'The Qur\'an: A Contemporary Understanding', author: 'Dr. Muhammad Asad', category: 'quran-tafsir' },
     ],
   }
 

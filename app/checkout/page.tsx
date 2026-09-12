@@ -159,9 +159,9 @@ function CheckoutForm() {
               style: {
                 base: {
                   fontSize: '16px',
-                  color: '#2C221E',
+                  color: '#222222',
                   '::placeholder': {
-                    color: '#5A4A42',
+                    color: '#777777',
                   },
                 },
                 invalid: {

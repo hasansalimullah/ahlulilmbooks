@@ -8,11 +8,6 @@ import { ReviewsCarousel } from '@/components/ReviewsCarousel'
 export default function Home() {
   return (
     <div className="w-full">
-      {/* Announcement Bar */}
-      <div className="bg-wood-dark text-white py-3 px-4 text-center text-sm">
-        <p>🌍 Worldwide Shipping Available | Free Delivery on Orders Over $50</p>
-      </div>
-
       {/* Hero Banner */}
       <HeroBanner />
 
@@ -27,6 +22,19 @@ export default function Home() {
         <div className="max-w-7xl mx-auto">
           <h2 className="text-4xl font-bold mb-12 text-text-primary">New Arrivals</h2>
           <NewArrivalsCarousel />
+        </div>
+      </section>
+
+      {/* Books on Request CTA */}
+      <section className="py-12 px-4 bg-wood-dark">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+          <div>
+            <h3 className="text-2xl font-bold text-white mb-1">Looking for a specific title or tahqiq?</h3>
+            <p className="text-white/70">We source rare and out-of-print works on request — just tell us what you need.</p>
+          </div>
+          <a href="#request-a-book" className="btn-primary bg-accent-gold text-wood-dark hover:bg-yellow-400 whitespace-nowrap px-6 py-3 font-semibold rounded-lg transition-colors">
+            Request a Book
+          </a>
         </div>
       </section>
 

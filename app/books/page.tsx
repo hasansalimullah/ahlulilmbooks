@@ -19,15 +19,18 @@ function BooksPageContent() {
   const [selectedPublisher, setSelectedPublisher] = useState<string>('')
   const [selectedYear, setSelectedYear] = useState<string>('')
   const [stockFilter, setStockFilter] = useState<string>('')
+  const [fullHarakatOnly, setFullHarakatOnly] = useState(false)
   const [sortBy, setSortBy] = useState<string>('newest')
   const [isFilterOpen, setIsFilterOpen] = useState(false)
 
-  // Pick up ?category= and ?subcategory= from mega menu / category card links
+  // Pick up ?category=, ?subcategory=, and ?vocalization= from mega menu / nav links
   useEffect(() => {
     const categoryParam = searchParams.get('category')
     const subcategoryParam = searchParams.get('subcategory')
+    const vocalizationParam = searchParams.get('vocalization')
     if (categoryParam) setSelectedCategory(categoryParam)
     if (subcategoryParam) setSelectedSubcategory(subcategoryParam)
+    if (vocalizationParam === 'full') setFullHarakatOnly(true)
   }, [searchParams])
 
   const filteredBooks = useMemo(() => {
@@ -78,6 +81,10 @@ function BooksPageContent() {
       result = result.filter((book) => !book.inStock)
     }
 
+    if (fullHarakatOnly) {
+      result = result.filter((book) => book.vocalization === 'full')
+    }
+
     switch (sortBy) {
       case 'price-low':
         result = [...result].sort((a, b) => a.price - b.price)
@@ -107,6 +114,7 @@ function BooksPageContent() {
     selectedPublisher,
     selectedYear,
     stockFilter,
+    fullHarakatOnly,
     sortBy,
   ])
 
@@ -133,6 +141,7 @@ function BooksPageContent() {
     setSelectedPublisher('')
     setSelectedYear('')
     setStockFilter('')
+    setFullHarakatOnly(false)
     setSearchTerm('')
   }
 
@@ -296,6 +305,20 @@ function BooksPageContent() {
                   <span className="text-text-muted text-sm">Out of Stock</span>
                 </label>
               </div>
+            </div>
+
+            {/* 100% Harakat Filter */}
+            <div className="mb-6">
+              <h3 className="font-semibold text-text-primary mb-3">Vocalization</h3>
+              <label className="flex items-center gap-2 cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={fullHarakatOnly}
+                  onChange={(e) => setFullHarakatOnly(e.target.checked)}
+                  className="w-4 h-4"
+                />
+                <span className="text-text-muted text-sm">100% Harakat only</span>
+              </label>
             </div>
 
             {/* Price Filter */}

@@ -1,20 +1,24 @@
 import Link from 'next/link'
-import { BookOpen, ScrollText, Scroll, Users, Languages } from 'lucide-react'
+import { BookOpen, ScrollText, Scroll, Users, Languages, BookMarked, Landmark } from 'lucide-react'
 import { categories } from '@/lib/data/categories'
 
 const icons = {
   aqeedah: BookOpen,
   fiqh: ScrollText,
+  'quran-tafsir': BookMarked,
   hadith: Scroll,
-  seerah: Users,
+  history: Landmark,
+  'muslim-family': Users,
   arabic: Languages,
 }
 
 const colors = {
   aqeedah: 'from-wood-dark/10 to-wood-light/10',
   fiqh: 'from-amber-100 to-orange-100',
+  'quran-tafsir': 'from-orange-100 to-amber-50',
   hadith: 'from-amber-50 to-yellow-50',
-  seerah: 'from-orange-50 to-red-50',
+  history: 'from-orange-50 to-red-50',
+  'muslim-family': 'from-yellow-50 to-amber-100',
   arabic: 'from-amber-50 to-orange-50',
 }
 

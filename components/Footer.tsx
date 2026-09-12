@@ -2,17 +2,27 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { Mail, MapPin, Phone, Facebook, Twitter, Instagram } from 'lucide-react'
+import { Mail, MapPin, Phone, Facebook, Instagram, Music2, Send } from 'lucide-react'
 
 export function Footer() {
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+
+  const [requestForm, setRequestForm] = useState({ name: '', email: '', phone: '', comment: '' })
+  const [requestSent, setRequestSent] = useState(false)
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault()
     setSubscribed(true)
     setEmail('')
     setTimeout(() => setSubscribed(false), 3000)
+  }
+
+  const handleRequestBook = (e: React.FormEvent) => {
+    e.preventDefault()
+    setRequestSent(true)
+    setRequestForm({ name: '', email: '', phone: '', comment: '' })
+    setTimeout(() => setRequestSent(false), 4000)
   }
 
   return (
@@ -46,6 +56,68 @@ export function Footer() {
               </div>
               {subscribed && (
                 <p className="text-accent-gold text-sm">Thanks for subscribing!</p>
+              )}
+            </form>
+          </div>
+        </div>
+
+        {/* Request a Book Section */}
+        <div id="request-a-book" className="mb-16 pb-16 border-b border-wood-light scroll-mt-24">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div>
+              <h3 className="text-2xl font-bold mb-4">Request a Book</h3>
+              <p className="text-wood-light mb-6">
+                Looking for a specific title, edition, or tahqiq we don&apos;t currently list? Tell us what you&apos;re after and we&apos;ll try to source it for you.
+              </p>
+            </div>
+            <form onSubmit={handleRequestBook} className="space-y-3">
+              {requestSent ? (
+                <p className="text-accent-gold text-sm font-medium">
+                  Thanks — we&apos;ve received your request and will be in touch soon.
+                </p>
+              ) : (
+                <>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <input
+                      type="text"
+                      value={requestForm.name}
+                      onChange={(e) => setRequestForm({ ...requestForm, name: e.target.value })}
+                      placeholder="Name"
+                      className="px-4 py-2.5 rounded-lg text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent-gold"
+                      required
+                    />
+                    <input
+                      type="email"
+                      value={requestForm.email}
+                      onChange={(e) => setRequestForm({ ...requestForm, email: e.target.value })}
+                      placeholder="Email Address"
+                      className="px-4 py-2.5 rounded-lg text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent-gold"
+                      required
+                    />
+                  </div>
+                  <input
+                    type="tel"
+                    value={requestForm.phone}
+                    onChange={(e) => setRequestForm({ ...requestForm, phone: e.target.value })}
+                    placeholder="Phone Number (optional)"
+                    className="w-full px-4 py-2.5 rounded-lg text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent-gold"
+                  />
+                  <textarea
+                    value={requestForm.comment}
+                    onChange={(e) => setRequestForm({ ...requestForm, comment: e.target.value })}
+                    placeholder="Which book or edition are you looking for?"
+                    rows={3}
+                    className="w-full px-4 py-2.5 rounded-lg text-text-primary text-sm focus:outline-none focus:ring-2 focus:ring-accent-gold resize-none"
+                    required
+                  />
+                  <button
+                    type="submit"
+                    className="px-6 py-2.5 bg-accent-gold text-wood-dark font-semibold rounded-lg hover:bg-yellow-400 transition-colors flex items-center gap-2"
+                  >
+                    <Send className="w-4 h-4" />
+                    Send Request
+                  </button>
+                </>
               )}
             </form>
           </div>
@@ -100,8 +172,8 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/books?category=seerah" className="hover:text-white transition-colors">
-                  Seerah
+                <Link href="/books?category=history" className="hover:text-white transition-colors">
+                  History
                 </Link>
               </li>
             </ul>
@@ -146,8 +218,8 @@ export function Footer() {
               <a href="#" className="p-3 bg-wood-light rounded-lg hover:bg-accent-gold hover:text-wood-dark transition-colors">
                 <Facebook className="w-5 h-5" />
               </a>
-              <a href="#" className="p-3 bg-wood-light rounded-lg hover:bg-accent-gold hover:text-wood-dark transition-colors">
-                <Twitter className="w-5 h-5" />
+              <a href="#" aria-label="TikTok" className="p-3 bg-wood-light rounded-lg hover:bg-accent-gold hover:text-wood-dark transition-colors">
+                <Music2 className="w-5 h-5" />
               </a>
               <a href="#" className="p-3 bg-wood-light rounded-lg hover:bg-accent-gold hover:text-wood-dark transition-colors">
                 <Instagram className="w-5 h-5" />

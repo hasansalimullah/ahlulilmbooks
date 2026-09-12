@@ -4,7 +4,7 @@ export interface CategorySubgroup {
 }
 
 export interface CategoryInfo {
-  id: 'aqeedah' | 'fiqh' | 'hadith' | 'seerah' | 'arabic'
+  id: 'aqeedah' | 'fiqh' | 'hadith' | 'quran-tafsir' | 'history' | 'muslim-family' | 'arabic'
   name: string
   subtitle: string
   description: string
@@ -23,9 +23,9 @@ export const categories: CategoryInfo[] = [
     subgroups: [
       { name: 'Tawheed & the Names of Allah', subcategory: 'tawheed' },
       { name: 'Foundational Creed Texts', subcategory: 'foundational-texts' },
-      { name: 'Explanations & Commentaries', subcategory: 'commentaries' },
+      { name: 'Kitab At-Tawhid Explanations', subcategory: 'commentaries' },
+      { name: 'Al-Aqidah Al-Wasitiyyah Explanations', subcategory: 'commentaries' },
       { name: 'Sects & Refutations', subcategory: 'refutations' },
-      { name: "Tafsir & Qur'anic Studies", subcategory: 'tafsir' },
     ],
   },
   {
@@ -44,6 +44,20 @@ export const categories: CategoryInfo[] = [
     ],
   },
   {
+    id: 'quran-tafsir',
+    name: "Qur'an & Tafsir",
+    subtitle: 'Qur\'anic Exegesis',
+    description: 'Translations and commentary of the Qur\'an',
+    longDescription:
+      'Mushaf editions, word-for-word translations, and the great works of tafsir (Qur\'anic exegesis) from classical and contemporary scholars.',
+    subgroups: [
+      { name: 'Tafsir Collections', subcategory: 'tafsir-collections' },
+      { name: 'Word-by-Word Translations', subcategory: 'word-by-word' },
+      { name: 'Tajweed & Recitation', subcategory: 'tajweed' },
+      { name: "Virtues of the Qur'an", subcategory: 'virtues' },
+    ],
+  },
+  {
     id: 'hadith',
     name: 'Hadith',
     subtitle: 'Prophetic Traditions',
@@ -58,17 +72,31 @@ export const categories: CategoryInfo[] = [
     ],
   },
   {
-    id: 'seerah',
-    name: 'Seerah',
-    subtitle: 'Biography',
-    description: 'Life of Prophet Muhammad',
+    id: 'history',
+    name: 'History',
+    subtitle: 'Islamic History',
+    description: 'Seerah, companions, and early Islamic civilization',
     longDescription:
-      'Biographical works detailing the life of the Prophet Muhammad ﷺ — his character, his companions, and the history of early Islam.',
+      'Biographical and historical works — the life of the Prophet Muhammad ﷺ, his companions, and the history of early Islam and the great Islamic civilizations that followed.',
     subgroups: [
-      { name: 'Life of the Prophet ﷺ', subcategory: 'life-of-prophet' },
+      { name: 'Life of the Prophet ﷺ (Seerah)', subcategory: 'life-of-prophet' },
       { name: 'The Companions (Sahabah)', subcategory: 'companions' },
       { name: 'Early Islamic History', subcategory: 'early-history' },
       { name: 'Stories of the Prophets', subcategory: 'prophets' },
+    ],
+  },
+  {
+    id: 'muslim-family',
+    name: 'Muslim Family',
+    subtitle: 'Marriage & Parenting',
+    description: 'Guidance for the Muslim household',
+    longDescription:
+      'Practical guidance rooted in the Qur\'an and Sunnah for marriage, raising children, and running a household according to Islamic etiquette.',
+    subgroups: [
+      { name: 'Marriage in Islam', subcategory: 'marriage' },
+      { name: 'Parenting & Children', subcategory: 'parenting' },
+      { name: 'Women in Islam', subcategory: 'women' },
+      { name: 'Household Etiquette', subcategory: 'etiquette' },
     ],
   },
   {

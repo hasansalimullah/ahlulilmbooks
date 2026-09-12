@@ -23,26 +23,37 @@ export function Header() {
     subgroups: cat.subgroups,
   }))
 
+  const announcements = [
+    'As-Salaamu Alaikum — Welcome to AhlulIlmBooks',
+    '5% OFF your first order with code SALAF5',
+    '🌍 Worldwide Shipping | Free Delivery on Orders Over $50',
+    '100% Authentic Sources, direct from the publisher',
+  ]
+
   return (
     <>
-      {/* Dark Wooden Announcement Bar */}
-      <div className="bg-wood-dark text-white py-3 px-4 text-center text-sm hidden md:block">
-        <p>🌍 Worldwide Shipping Available | Free Delivery on Orders Over $50 | 100% Authentic Sources</p>
+      {/* Marquee Announcement Bar */}
+      <div className="bg-announce-dark text-white h-9 flex items-center overflow-hidden">
+        <div className="marquee-track flex items-center gap-16 whitespace-nowrap text-xs tracking-wide">
+          {[...announcements, ...announcements].map((msg, i) => (
+            <span key={i}>{msg}</span>
+          ))}
+        </div>
       </div>
 
       {/* Main Header */}
-      <header className="bg-white sticky top-0 z-40 shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 py-4">
+      <header className="bg-wood-dark sticky top-0 z-40 shadow-sm">
+        <div className="max-w-7xl mx-auto px-4 py-3">
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
-              <div className="text-2xl font-bold text-wood-dark">
-                📚 AhlulIlm
+              <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-2xl shadow-md">
+                📚
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center gap-8">
+            <nav className="hidden lg:flex items-center gap-7">
               {navLinks.map((link) => (
                 <div
                   key={link.href}
@@ -52,7 +63,7 @@ export function Header() {
                 >
                   <Link
                     href={link.href}
-                    className="text-text-primary hover:text-wood-dark transition-colors text-sm font-medium py-2 inline-block"
+                    className="text-white/90 hover:text-white hover:opacity-80 transition-colors text-xs font-medium uppercase tracking-wide py-2 inline-block"
                   >
                     {link.label}
                   </Link>
@@ -68,7 +79,7 @@ export function Header() {
                           <Link
                             key={group.subcategory}
                             href={`/books?category=${link.category}&subcategory=${group.subcategory}`}
-                            className="px-2 py-2 rounded-md text-sm text-text-primary hover:bg-parchment hover:text-wood-dark transition-colors"
+                            className="px-2 py-2 rounded-md text-sm text-text-primary hover:bg-section-bg hover:text-wood-dark transition-colors"
                           >
                             {group.name}
                           </Link>
@@ -85,8 +96,14 @@ export function Header() {
                 </div>
               ))}
               <Link
+                href="/books?vocalization=full"
+                className="text-white/90 hover:text-white hover:opacity-80 transition-colors text-xs font-medium uppercase tracking-wide"
+              >
+                100% Harakat
+              </Link>
+              <Link
                 href="/about"
-                className="text-text-primary hover:text-wood-dark transition-colors text-sm font-medium"
+                className="text-white/90 hover:text-white hover:opacity-80 transition-colors text-xs font-medium uppercase tracking-wide"
               >
                 About Us
               </Link>
@@ -98,22 +115,22 @@ export function Header() {
                 <input
                   type="text"
                   placeholder="Search books..."
-                  className="w-full px-4 py-2 border border-border-warm rounded-lg text-sm focus:outline-none focus:border-wood-dark"
+                  className="w-full px-4 py-2 border border-white/20 bg-white/10 text-white placeholder-white/60 rounded-lg text-sm focus:outline-none focus:border-white/50 focus:bg-white"
                 />
-                <Search className="absolute right-3 top-2.5 w-4 h-4 text-text-muted" />
+                <Search className="absolute right-3 top-2.5 w-4 h-4 text-white/70" />
               </div>
             </div>
 
             {/* Right Actions */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2">
               {/* Wishlist Button */}
               <Link
                 href="/wishlist"
-                className="relative p-2 hover:bg-parchment rounded-lg transition-colors hidden sm:inline-block"
+                className="relative p-2 hover:bg-white/10 rounded-lg transition-colors hidden sm:inline-block"
               >
-                <Heart className="w-6 h-6 text-wood-dark" />
+                <Heart className="w-5 h-5 text-white" />
                 {bookIds.length > 0 && (
-                  <span className="absolute top-0 right-0 w-5 h-5 bg-accent-gold text-text-primary text-xs font-bold rounded-full flex items-center justify-center">
+                  <span className="absolute top-0 right-0 w-5 h-5 bg-accent-gold text-wood-dark text-xs font-bold rounded-full flex items-center justify-center">
                     {bookIds.length}
                   </span>
                 )}
@@ -122,11 +139,11 @@ export function Header() {
               {/* Cart Button */}
               <button
                 onClick={() => setIsCartOpen(true)}
-                className="relative p-2 hover:bg-parchment rounded-lg transition-colors"
+                className="relative p-2 hover:bg-white/10 rounded-lg transition-colors"
               >
-                <ShoppingCart className="w-6 h-6 text-wood-dark" />
+                <ShoppingCart className="w-5 h-5 text-white" />
                 {itemCount > 0 && (
-                  <span className="absolute top-0 right-0 w-5 h-5 bg-accent-gold text-text-primary text-xs font-bold rounded-full flex items-center justify-center">
+                  <span className="absolute top-0 right-0 w-5 h-5 bg-accent-gold text-wood-dark text-xs font-bold rounded-full flex items-center justify-center">
                     {itemCount}
                   </span>
                 )}
@@ -135,12 +152,12 @@ export function Header() {
               {/* Mobile Menu Button */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="lg:hidden p-2 hover:bg-parchment rounded-lg transition-colors"
+                className="lg:hidden p-2 hover:bg-white/10 rounded-lg transition-colors"
               >
                 {isMenuOpen ? (
-                  <X className="w-6 h-6 text-wood-dark" />
+                  <X className="w-5 h-5 text-white" />
                 ) : (
-                  <Menu className="w-6 h-6 text-wood-dark" />
+                  <Menu className="w-5 h-5 text-white" />
                 )}
               </button>
             </div>
@@ -148,28 +165,35 @@ export function Header() {
 
           {/* Mobile Navigation */}
           {isMenuOpen && (
-            <nav className="lg:hidden mt-4 pt-4 border-t border-border-warm">
-              <div className="flex flex-col gap-2">
+            <nav className="lg:hidden mt-4 pt-4 border-t border-white/20">
+              <div className="flex flex-col gap-1">
                 {navLinks.map((link) => (
                   <Link
                     key={link.href}
                     href={link.href}
-                    className="px-4 py-2 text-text-primary hover:bg-parchment rounded-lg transition-colors"
+                    className="px-4 py-2 text-white/90 hover:bg-white/10 rounded-lg transition-colors text-sm uppercase tracking-wide"
                     onClick={() => setIsMenuOpen(false)}
                   >
                     {link.label}
                   </Link>
                 ))}
                 <Link
+                  href="/books?vocalization=full"
+                  className="px-4 py-2 text-white/90 hover:bg-white/10 rounded-lg transition-colors text-sm uppercase tracking-wide"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  100% Harakat
+                </Link>
+                <Link
                   href="/wishlist"
-                  className="px-4 py-2 text-text-primary hover:bg-parchment rounded-lg transition-colors flex items-center gap-2"
+                  className="px-4 py-2 text-white/90 hover:bg-white/10 rounded-lg transition-colors flex items-center gap-2 text-sm"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   <Heart className="w-4 h-4" /> Wishlist{bookIds.length > 0 ? ` (${bookIds.length})` : ''}
                 </Link>
                 <Link
                   href="/about"
-                  className="px-4 py-2 text-text-primary hover:bg-parchment rounded-lg transition-colors"
+                  className="px-4 py-2 text-white/90 hover:bg-white/10 rounded-lg transition-colors text-sm uppercase tracking-wide"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   About Us

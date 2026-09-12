@@ -63,7 +63,15 @@ export function QuickViewModal({
               </span>
             </div>
 
-            <p className="text-3xl font-bold text-wood-dark mb-4">${book.price}</p>
+            {book.originalPrice && book.originalPrice > book.price ? (
+              <div className="flex items-baseline gap-3 mb-4">
+                <p className="text-3xl font-bold text-accent-sale">${book.price}</p>
+                <p className="text-lg text-text-muted line-through">${book.originalPrice}</p>
+                <span className="badge-sale">Sale</span>
+              </div>
+            ) : (
+              <p className="text-3xl font-bold text-wood-dark mb-4">${book.price}</p>
+            )}
 
             <p className="text-text-muted text-sm mb-4 line-clamp-4">{book.description}</p>
 

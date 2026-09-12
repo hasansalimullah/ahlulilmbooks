@@ -108,7 +108,15 @@ export default function BookDetailPage({ params }: BookDetailPageProps) {
             {/* Price */}
             <div className="mb-8">
               <p className="text-text-muted text-sm mb-2">Price</p>
-              <p className="text-5xl font-bold text-wood-dark">${book.price}</p>
+              {book.originalPrice && book.originalPrice > book.price ? (
+                <div className="flex items-baseline gap-4">
+                  <p className="text-5xl font-bold text-accent-sale">${book.price}</p>
+                  <p className="text-2xl text-text-muted line-through">${book.originalPrice}</p>
+                  <span className="badge-sale">Sale</span>
+                </div>
+              ) : (
+                <p className="text-5xl font-bold text-wood-dark">${book.price}</p>
+              )}
             </div>
 
             {/* Description */}
