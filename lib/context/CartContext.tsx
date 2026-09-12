@@ -1,6 +1,6 @@
 'use client'
 
-import React, { createContext, useContext, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import { CartItem } from '@/lib/types'
@@ -77,20 +77,10 @@ const useCartStore = create<CartStore>()(
   )
 )
 
-const CartContext = createContext<CartStore | undefined>(undefined)
-
 export function CartProvider({ children }: { children: ReactNode }) {
-  return (
-    <CartContext.Provider value={useCartStore}>
-      {children}
-    </CartContext.Provider>
-  )
+  return children
 }
 
 export function useCart() {
-  const store = useCartStore()
-  if (!store) {
-    throw new Error('useCart must be used within CartProvider')
-  }
-  return store
+  return useCartStore()
 }
