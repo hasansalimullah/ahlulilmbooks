@@ -4,7 +4,9 @@ export interface Book {
   author: string
   price: number
   image: string
+  imageAlt?: string
   category: 'aqeedah' | 'fiqh' | 'hadith' | 'seerah' | 'arabic'
+  subcategory?: string
   description: string
   rating: number
   reviews: number
@@ -17,6 +19,15 @@ export interface Book {
   isBestseller: boolean
   tableOfContents?: string[]
   samplePages?: string[]
+  // Detailed spec-sheet fields (tahqiq/edition details)
+  editor?: string
+  vocalization?: 'full' | 'partial' | 'none'
+  volumes?: number
+  dimensions?: string
+  printEdition?: string
+  paperQuality?: string
+  publicationYear?: number
+  inStock: boolean
 }
 
 export interface CartItem {

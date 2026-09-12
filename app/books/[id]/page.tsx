@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { books } from '@/lib/data/books'
 import { useCart } from '@/lib/context/CartContext'
+import { useWishlist } from '@/lib/context/WishlistContext'
 import { Star, ShoppingCart, Heart, Share2, ChevronRight, BookOpen } from 'lucide-react'
 import { notFound } from 'next/navigation'
 
@@ -16,9 +17,10 @@ interface BookDetailPageProps {
 export default function BookDetailPage({ params }: BookDetailPageProps) {
   const book = books.find((b) => b.id === params.id)
   const { addItem } = useCart()
+  const { toggle, isWishlisted: checkWishlisted } = useWishlist()
   const [quantity, setQuantity] = useState(1)
-  const [isWishlisted, setIsWishlisted] = useState(false)
   const [isAdded, setIsAdded] = useState(false)
+  const isWishlisted = book ? checkWishlisted(book.id) : false
 
   if (!book) {
     notFound()
@@ -115,31 +117,85 @@ export default function BookDetailPage({ params }: BookDetailPageProps) {
               <p className="text-text-muted leading-relaxed">{book.description}</p>
             </div>
 
-            {/* Book Details */}
-            <div className="grid grid-cols-2 gap-4 mb-8 p-4 bg-white rounded-lg border border-border-warm">
-              <div>
-                <p className="text-text-muted text-sm mb-1">Language</p>
-                <p className="font-semibold text-text-primary capitalize">{book.language}</p>
-              </div>
-              <div>
-                <p className="text-text-muted text-sm mb-1">Binding</p>
-                <p className="font-semibold text-text-primary capitalize">{book.binding}</p>
-              </div>
-              <div>
-                <p className="text-text-muted text-sm mb-1">Pages</p>
-                <p className="font-semibold text-text-primary">{book.pages}</p>
-              </div>
-              <div>
-                <p className="text-text-muted text-sm mb-1">Publisher</p>
-                <p className="font-semibold text-text-primary">{book.publisher}</p>
-              </div>
-              <div>
-                <p className="text-text-muted text-sm mb-1">ISBN</p>
-                <p className="font-semibold text-text-primary text-sm">{book.isbn}</p>
-              </div>
-              <div>
-                <p className="text-text-muted text-sm mb-1">Format</p>
-                <p className="font-semibold text-text-primary capitalize">{book.language}</p>
+            {/* Stock Status */}
+            <div className="mb-6">
+              <span
+                className={`inline-block px-3 py-1 rounded-full text-xs font-bold ${
+                  book.inStock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-700'
+                }`}
+              >
+                {book.inStock ? '● In Stock' : '● Out of Stock'}
+              </span>
+            </div>
+
+            {/* Full Specification Sheet */}
+            <div className="mb-8 bg-white rounded-lg border border-border-warm overflow-hidden">
+              <h3 className="font-semibold text-text-primary px-4 pt-4 pb-2">Edition Details</h3>
+              <div className="grid grid-cols-2 gap-x-4 gap-y-3 p-4 pt-2">
+                {book.editor && (
+                  <div>
+                    <p className="text-text-muted text-sm mb-1">Tahqiq / Editor</p>
+                    <p className="font-semibold text-text-primary text-sm">{book.editor}</p>
+                  </div>
+                )}
+                <div>
+                  <p className="text-text-muted text-sm mb-1">Publishing House</p>
+                  <p className="font-semibold text-text-primary text-sm">{book.publisher}</p>
+                </div>
+                {book.vocalization && (
+                  <div>
+                    <p className="text-text-muted text-sm mb-1">Vocalization</p>
+                    <p className="font-semibold text-text-primary text-sm capitalize">
+                      {book.vocalization === 'full'
+                        ? 'Fully vocalized (harakat)'
+                        : book.vocalization === 'partial'
+                        ? 'Partially vocalized'
+                        : 'Unvocalized'}
+                    </p>
+                  </div>
+                )}
+                <div>
+                  <p className="text-text-muted text-sm mb-1">Language</p>
+                  <p className="font-semibold text-text-primary text-sm capitalize">{book.language}</p>
+                </div>
+                <div>
+                  <p className="text-text-muted text-sm mb-1">Binding</p>
+                  <p className="font-semibold text-text-primary text-sm capitalize">{book.binding}</p>
+                </div>
+                <div>
+                  <p className="text-text-muted text-sm mb-1">Pages{book.volumes && book.volumes > 1 ? ' / Volumes' : ''}</p>
+                  <p className="font-semibold text-text-primary text-sm">
+                    {book.pages}{book.volumes && book.volumes > 1 ? ` pages · ${book.volumes} volumes` : ' pages'}
+                  </p>
+                </div>
+                {book.dimensions && (
+                  <div>
+                    <p className="text-text-muted text-sm mb-1">Dimensions</p>
+                    <p className="font-semibold text-text-primary text-sm">{book.dimensions}</p>
+                  </div>
+                )}
+                {book.printEdition && (
+                  <div>
+                    <p className="text-text-muted text-sm mb-1">Print Edition</p>
+                    <p className="font-semibold text-text-primary text-sm">{book.printEdition}</p>
+                  </div>
+                )}
+                {book.publicationYear && (
+                  <div>
+                    <p className="text-text-muted text-sm mb-1">Publication Year</p>
+                    <p className="font-semibold text-text-primary text-sm">{book.publicationYear}</p>
+                  </div>
+                )}
+                {book.paperQuality && (
+                  <div className="col-span-2">
+                    <p className="text-text-muted text-sm mb-1">Paper Quality</p>
+                    <p className="font-semibold text-text-primary text-sm">{book.paperQuality}</p>
+                  </div>
+                )}
+                <div>
+                  <p className="text-text-muted text-sm mb-1">ISBN</p>
+                  <p className="font-semibold text-text-primary text-sm">{book.isbn}</p>
+                </div>
               </div>
             </div>
 
@@ -164,10 +220,11 @@ export default function BookDetailPage({ params }: BookDetailPageProps) {
                 </div>
                 <button
                   onClick={handleAddToCart}
-                  className="flex-1 btn-primary text-lg py-3 flex items-center justify-center gap-2"
+                  disabled={!book.inStock}
+                  className="flex-1 btn-primary text-lg py-3 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   <ShoppingCart className="w-5 h-5" />
-                  {isAdded ? 'Added to Cart!' : 'Add to Cart'}
+                  {!book.inStock ? 'Out of Stock' : isAdded ? 'Added to Cart!' : 'Add to Cart'}
                 </button>
               </div>
             </div>
@@ -175,14 +232,14 @@ export default function BookDetailPage({ params }: BookDetailPageProps) {
             {/* Wishlist & Share */}
             <div className="flex gap-4 mb-8">
               <button
-                onClick={() => setIsWishlisted(!isWishlisted)}
+                onClick={() => toggle(book.id)}
                 className={`flex-1 py-3 rounded-lg border-2 transition-colors flex items-center justify-center gap-2 ${
                   isWishlisted
                     ? 'border-red-500 bg-red-50 text-red-600'
                     : 'border-border-warm hover:border-wood-dark'
                 }`}
               >
-                <Heart className="w-5 h-5" />
+                <Heart className={`w-5 h-5 ${isWishlisted ? 'fill-red-500' : ''}`} />
                 {isWishlisted ? 'Wishlisted' : 'Add to Wishlist'}
               </button>
               <button className="flex-1 btn-secondary py-3 flex items-center justify-center gap-2">

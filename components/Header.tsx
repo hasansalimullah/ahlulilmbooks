@@ -3,24 +3,25 @@
 import React, { useState } from 'react'
 import Link from 'next/link'
 import { useCart } from '@/lib/context/CartContext'
-import { ShoppingCart, Search, Menu, X } from 'lucide-react'
+import { useWishlist } from '@/lib/context/WishlistContext'
+import { categories } from '@/lib/data/categories'
+import { ShoppingCart, Search, Menu, X, Heart } from 'lucide-react'
 import { CartDrawer } from './CartDrawer'
 
 export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
+  const [openMegaMenu, setOpenMegaMenu] = useState<string | null>(null)
   const { getItemCount } = useCart()
+  const { bookIds } = useWishlist()
   const itemCount = getItemCount()
 
-  const navLinks = [
-    { href: '/', label: 'Home' },
-    { href: '/books?category=aqeedah', label: 'Aqeedah' },
-    { href: '/books?category=fiqh', label: 'Fiqh' },
-    { href: '/books?category=hadith', label: 'Hadith' },
-    { href: '/books?category=seerah', label: 'Seerah' },
-    { href: '/books?category=arabic', label: 'Arabic' },
-    { href: '/about', label: 'About Us' },
-  ]
+  const navLinks = categories.map((cat) => ({
+    href: `/books?category=${cat.id}`,
+    label: cat.name,
+    category: cat.id,
+    subgroups: cat.subgroups,
+  }))
 
   return (
     <>
@@ -43,14 +44,52 @@ export function Header() {
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
-                <Link
+                <div
                   key={link.href}
-                  href={link.href}
-                  className="text-text-primary hover:text-wood-dark transition-colors text-sm font-medium"
+                  className="relative"
+                  onMouseEnter={() => setOpenMegaMenu(link.category)}
+                  onMouseLeave={() => setOpenMegaMenu(null)}
                 >
-                  {link.label}
-                </Link>
+                  <Link
+                    href={link.href}
+                    className="text-text-primary hover:text-wood-dark transition-colors text-sm font-medium py-2 inline-block"
+                  >
+                    {link.label}
+                  </Link>
+
+                  {/* Mega menu dropdown */}
+                  {openMegaMenu === link.category && (
+                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-72 bg-white border border-border-warm rounded-lg shadow-book-hover p-4 z-40">
+                      <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2 px-2">
+                        Browse {link.label}
+                      </p>
+                      <div className="grid grid-cols-1 gap-0.5">
+                        {link.subgroups.map((group) => (
+                          <Link
+                            key={group.subcategory}
+                            href={`/books?category=${link.category}&subcategory=${group.subcategory}`}
+                            className="px-2 py-2 rounded-md text-sm text-text-primary hover:bg-parchment hover:text-wood-dark transition-colors"
+                          >
+                            {group.name}
+                          </Link>
+                        ))}
+                      </div>
+                      <Link
+                        href={link.href}
+                        className="block mt-2 px-2 py-2 text-sm font-semibold text-wood-dark hover:underline"
+                      >
+                        View all {link.label} books →
+                      </Link>
+                    </div>
+                  )}
+                </div>
               ))}
+              <Link
+                href="/about"
+                className="text-text-primary hover:text-wood-dark transition-colors text-sm font-medium"
+              >
+                About Us
+              </Link>
             </nav>
 
             {/* Search Bar */}
@@ -67,6 +106,19 @@ export function Header() {
 
             {/* Right Actions */}
             <div className="flex items-center gap-4">
+              {/* Wishlist Button */}
+              <Link
+                href="/wishlist"
+                className="relative p-2 hover:bg-parchment rounded-lg transition-colors hidden sm:inline-block"
+              >
+                <Heart className="w-6 h-6 text-wood-dark" />
+                {bookIds.length > 0 && (
+                  <span className="absolute top-0 right-0 w-5 h-5 bg-accent-gold text-text-primary text-xs font-bold rounded-full flex items-center justify-center">
+                    {bookIds.length}
+                  </span>
+                )}
+              </Link>
+
               {/* Cart Button */}
               <button
                 onClick={() => setIsCartOpen(true)}
@@ -108,6 +160,20 @@ export function Header() {
                     {link.label}
                   </Link>
                 ))}
+                <Link
+                  href="/wishlist"
+                  className="px-4 py-2 text-text-primary hover:bg-parchment rounded-lg transition-colors flex items-center gap-2"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  <Heart className="w-4 h-4" /> Wishlist{bookIds.length > 0 ? ` (${bookIds.length})` : ''}
+                </Link>
+                <Link
+                  href="/about"
+                  className="px-4 py-2 text-text-primary hover:bg-parchment rounded-lg transition-colors"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  About Us
+                </Link>
               </div>
             </nav>
           )}
