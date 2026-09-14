@@ -6,7 +6,7 @@ export interface Book {
   originalPrice?: number // when set and higher than price, book is on sale
   image: string
   imageAlt?: string
-  category: 'aqeedah' | 'fiqh' | 'hadith' | 'quran-tafsir' | 'history' | 'muslim-family' | 'arabic'
+  category: 'aqeedah' | 'fiqh' | 'quran' | 'tafsir' | 'hadith' | 'history' | 'muslim-family' | 'arabic'
   subcategory?: string
   description: string
   rating: number

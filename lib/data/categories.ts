@@ -4,7 +4,7 @@ export interface CategorySubgroup {
 }
 
 export interface CategoryInfo {
-  id: 'aqeedah' | 'fiqh' | 'hadith' | 'quran-tafsir' | 'history' | 'muslim-family' | 'arabic'
+  id: 'aqeedah' | 'fiqh' | 'quran' | 'tafsir' | 'hadith' | 'history' | 'muslim-family' | 'arabic'
   name: string
   subtitle: string
   description: string
@@ -19,42 +19,66 @@ export const categories: CategoryInfo[] = [
     subtitle: 'Islamic Creed',
     description: 'Foundational beliefs and theology',
     longDescription:
-      'Books covering the foundational beliefs of Islam — the nature of Tawheed, the names and attributes of Allah, and the creed of the pious predecessors (Salaf as-Salih), from classical texts to contemporary explanations.',
+      'Books covering the foundational beliefs of Islam — Tawheed, the names and attributes of Allah, the creed of the Salaf, and the major matns and their explanations.',
     subgroups: [
-      { name: 'Tawheed & the Names of Allah', subcategory: 'tawheed' },
-      { name: 'Foundational Creed Texts', subcategory: 'foundational-texts' },
-      { name: 'Kitab At-Tawhid Explanations', subcategory: 'commentaries' },
-      { name: 'Al-Aqidah Al-Wasitiyyah Explanations', subcategory: 'commentaries' },
-      { name: 'Sects & Refutations', subcategory: 'refutations' },
+      { name: 'Tawheed', subcategory: 'tawheed' },
+      { name: 'Aqeedah Matn', subcategory: 'aqeedah-matn' },
+      { name: 'Asma wa Sifat', subcategory: 'asma-wa-sifat' },
+      { name: 'Iman', subcategory: 'iman' },
+      { name: 'Sunnah & Salaf', subcategory: 'sunnah-salaf' },
+      { name: 'Sects & Innovations', subcategory: 'sects-innovations' },
     ],
   },
   {
     id: 'fiqh',
     name: 'Fiqh',
     subtitle: 'Islamic Jurisprudence',
-    description: 'Laws and practices of Islam',
+    description: 'Laws and practices across the four madhabs',
     longDescription:
-      'Jurisprudence texts spanning worship, transactions, and daily practice, including classical and contemporary works across the major schools of thought.',
+      'Jurisprudence texts across the four schools of thought, comparative fiqh, and works organized by topic — worship, family, transactions, and contemporary issues.',
     subgroups: [
-      { name: 'Fiqh of Worship (Ibadat)', subcategory: 'worship' },
-      { name: 'Fiqh of Transactions (Muamalat)', subcategory: 'transactions' },
-      { name: 'Islamic Finance & Banking', subcategory: 'finance' },
-      { name: 'Usul al-Fiqh (Methodology)', subcategory: 'usul' },
-      { name: 'Comparative Madhab Studies', subcategory: 'comparative' },
+      { name: 'Hanafi', subcategory: 'hanafi' },
+      { name: 'Maliki', subcategory: 'maliki' },
+      { name: "Shafi'i", subcategory: 'shafii' },
+      { name: 'Hanbali', subcategory: 'hanbali' },
+      { name: 'Comparative Fiqh', subcategory: 'comparative-fiqh' },
+      { name: 'Purification & Prayer', subcategory: 'purification-prayer' },
+      { name: 'Fasting', subcategory: 'fasting' },
+      { name: 'Hajj & Umrah', subcategory: 'hajj-umrah' },
+      { name: 'Family', subcategory: 'family' },
+      { name: 'Business & Finance', subcategory: 'business-finance' },
+      { name: 'Contemporary Fiqh', subcategory: 'contemporary-fiqh' },
     ],
   },
   {
-    id: 'quran-tafsir',
-    name: "Qur'an & Tafsir",
-    subtitle: 'Qur\'anic Exegesis',
-    description: 'Translations and commentary of the Qur\'an',
+    id: 'quran',
+    name: "Qur'an",
+    subtitle: 'Mushafs & Qur\'anic Studies',
+    description: 'Mushaf editions, translations, and Qur\'anic sciences',
     longDescription:
-      'Mushaf editions, word-for-word translations, and the great works of tafsir (Qur\'anic exegesis) from classical and contemporary scholars.',
+      'Mushaf editions, translations, tajwid and recitation manuals, memorization resources, and the classical sciences of the Qur\'an.',
     subgroups: [
-      { name: 'Tafsir Collections', subcategory: 'tafsir-collections' },
-      { name: 'Word-by-Word Translations', subcategory: 'word-by-word' },
-      { name: 'Tajweed & Recitation', subcategory: 'tajweed' },
-      { name: "Virtues of the Qur'an", subcategory: 'virtues' },
+      { name: 'Mushafs', subcategory: 'mushafs' },
+      { name: 'Translation', subcategory: 'translation' },
+      { name: 'Tajwid', subcategory: 'tajwid' },
+      { name: 'Memorization', subcategory: 'memorization' },
+      { name: "Qur'an Sciences", subcategory: 'quran-sciences' },
+    ],
+  },
+  {
+    id: 'tafsir',
+    name: 'Tafsir',
+    subtitle: "Qur'anic Exegesis",
+    description: 'The great classical and contemporary works of tafsir',
+    longDescription:
+      'The major works of Qur\'anic exegesis, from Ibn Kathir and as-Sa\'di to the classical multi-volume commentaries, plus selected-surah studies and the principles of tafsir.',
+    subgroups: [
+      { name: 'Ibn Kathir', subcategory: 'ibn-kathir' },
+      { name: "As-Sa'di", subcategory: 'as-sadi' },
+      { name: 'Classical Tafsir', subcategory: 'classical-tafsir' },
+      { name: 'Complete Tafsir', subcategory: 'complete-tafsir' },
+      { name: 'Selected Surahs', subcategory: 'selected-surahs' },
+      { name: 'Tafsir Sciences', subcategory: 'tafsir-sciences' },
     ],
   },
   {
@@ -63,12 +87,16 @@ export const categories: CategoryInfo[] = [
     subtitle: 'Prophetic Traditions',
     description: 'Sayings and actions of the Prophet',
     longDescription:
-      'The recorded sayings, actions, and approvals of the Prophet Muhammad ﷺ, including the major collections and their commentaries.',
+      'The recorded sayings, actions, and approvals of the Prophet Muhammad ﷺ — the major collections, thematic compilations, and the sciences of Hadith.',
     subgroups: [
-      { name: 'The Six Major Collections', subcategory: 'six-collections' },
-      { name: 'Hadith Sciences (Mustalah)', subcategory: 'sciences' },
-      { name: '40 Hadith Compilations', subcategory: 'forty-hadith' },
-      { name: 'Commentaries (Shuruh)', subcategory: 'shuruh' },
+      { name: 'Bukhari', subcategory: 'bukhari' },
+      { name: 'Muslim', subcategory: 'muslim' },
+      { name: 'Six Books', subcategory: 'six-books' },
+      { name: 'Riyad as-Salihin', subcategory: 'riyad-as-salihin' },
+      { name: '40 Hadith', subcategory: 'forty-hadith' },
+      { name: 'Bulugh al-Maram', subcategory: 'bulugh-al-maram' },
+      { name: 'Hadith Commentaries', subcategory: 'hadith-commentaries' },
+      { name: 'Hadith Sciences', subcategory: 'hadith-sciences' },
     ],
   },
   {

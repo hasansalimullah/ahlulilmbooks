@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { books } from '@/lib/data/books'
 import { categories, getCategory } from '@/lib/data/categories'
-import { BookCard } from '@/components/BookCard'
+import { CategoryFilterPage } from '@/components/CategoryFilterPage'
 
 export function generateStaticParams() {
   return categories.map((category) => ({ category: category.id }))
@@ -24,7 +24,7 @@ export default function CategoryPage({ params }: { params: { category: string } 
   const categoryBooks = books.filter((book) => book.category === category.id)
 
   return (
-    <div className="min-h-screen bg-parchment">
+    <div className="min-h-screen bg-section-bg">
       {/* Category hero */}
       <section className="bg-gradient-to-br from-wood-dark to-wood-light text-white py-16 px-4">
         <div className="max-w-7xl mx-auto">
@@ -56,22 +56,9 @@ export default function CategoryPage({ params }: { params: { category: string } 
         ))}
       </section>
 
-      {/* Books grid */}
+      {/* Faceted filters + books grid, scoped to this category only */}
       <section className="max-w-7xl mx-auto px-4 pb-16">
-        <p className="text-text-muted mb-6">
-          <span className="font-bold text-text-primary">{categoryBooks.length}</span> books in {category.name}
-        </p>
-        {categoryBooks.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {categoryBooks.map((book) => (
-              <BookCard key={book.id} book={book} />
-            ))}
-          </div>
-        ) : (
-          <div className="text-center py-12 bg-white rounded-lg border border-border-warm">
-            <p className="text-text-muted text-lg">No books in this category yet — check back soon.</p>
-          </div>
-        )}
+        <CategoryFilterPage category={category} categoryBooks={categoryBooks} />
       </section>
     </div>
   )

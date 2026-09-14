@@ -127,7 +127,10 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
           {/* Brand */}
           <div>
-            <h2 className="text-2xl font-bold mb-4">📚 AhlulIlm</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <img src="/logo.png" alt="AhlulIlmBooks" className="w-10 h-10 object-contain bg-white rounded-full p-1" />
+              <h2 className="text-2xl font-bold">AhlulIlmBooks</h2>
+            </div>
             <p className="text-wood-light text-sm mb-6">
               Your trusted source for authentic Islamic books and knowledge.
             </p>

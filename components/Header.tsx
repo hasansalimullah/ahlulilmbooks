@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { useCart } from '@/lib/context/CartContext'
 import { useWishlist } from '@/lib/context/WishlistContext'
 import { categories } from '@/lib/data/categories'
+import { getRecentBooksByCategory, getBooksByAuthor } from '@/lib/data/books'
 import { ShoppingCart, Search, Menu, X, Heart } from 'lucide-react'
 import { CartDrawer } from './CartDrawer'
 
@@ -12,12 +13,13 @@ export function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [isCartOpen, setIsCartOpen] = useState(false)
   const [openMegaMenu, setOpenMegaMenu] = useState<string | null>(null)
+  const [hoveredAuthor, setHoveredAuthor] = useState<string | null>(null)
   const { getItemCount } = useCart()
   const { bookIds } = useWishlist()
   const itemCount = getItemCount()
 
   const navLinks = categories.map((cat) => ({
-    href: `/books?category=${cat.id}`,
+    href: `/categories/${cat.id}`,
     label: cat.name,
     category: cat.id,
     subgroups: cat.subgroups,
@@ -47,8 +49,8 @@ export function Header() {
           <div className="flex items-center justify-between gap-4">
             {/* Logo */}
             <Link href="/" className="flex-shrink-0">
-              <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center text-2xl shadow-md">
-                📚
+              <div className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-md overflow-hidden p-1.5">
+                <img src="/logo.png" alt="AhlulIlmBooks" className="w-full h-full object-contain" />
               </div>
             </Link>
 
@@ -69,30 +71,99 @@ export function Header() {
                   </Link>
 
                   {/* Mega menu dropdown */}
-                  {openMegaMenu === link.category && (
-                    <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-72 bg-white border border-border-warm rounded-lg shadow-book-hover p-4 z-40">
-                      <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2 px-2">
-                        Browse {link.label}
-                      </p>
-                      <div className="grid grid-cols-1 gap-0.5">
-                        {link.subgroups.map((group) => (
+                  {openMegaMenu === link.category && (() => {
+                    const recentBooks = getRecentBooksByCategory(link.category, 4)
+                    return (
+                      <div className="absolute top-full left-1/2 -translate-x-1/2 mt-0 w-[560px] bg-white border border-border-warm rounded-lg shadow-book-hover p-4 z-40 grid grid-cols-2 gap-4">
+                        {/* Subcategories column */}
+                        <div>
+                          <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2 px-2">
+                            Browse {link.label}
+                          </p>
+                          <div className="grid grid-cols-1 gap-0.5">
+                            {link.subgroups.map((group) => (
+                              <Link
+                                key={group.subcategory}
+                                href={`/books?category=${link.category}&subcategory=${group.subcategory}`}
+                                className="px-2 py-2 rounded-md text-sm text-text-primary hover:bg-section-bg hover:text-wood-dark transition-colors"
+                              >
+                                {group.name}
+                              </Link>
+                            ))}
+                          </div>
                           <Link
-                            key={group.subcategory}
-                            href={`/books?category=${link.category}&subcategory=${group.subcategory}`}
-                            className="px-2 py-2 rounded-md text-sm text-text-primary hover:bg-section-bg hover:text-wood-dark transition-colors"
+                            href={link.href}
+                            className="block mt-2 px-2 py-2 text-sm font-semibold text-wood-dark hover:underline"
                           >
-                            {group.name}
+                            View all {link.label} books →
                           </Link>
-                        ))}
+                        </div>
+
+                        {/* Recently Added column */}
+                        <div className="border-l border-border-warm pl-4">
+                          <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2 px-2">
+                            Recently Added
+                          </p>
+                          <div className="flex flex-col gap-2">
+                            {recentBooks.map((book) => (
+                              <div key={book.id} className="relative">
+                                <div
+                                  className="flex items-center gap-3 px-2 py-1.5 rounded-md hover:bg-section-bg transition-colors"
+                                  onMouseEnter={() => setHoveredAuthor(book.author)}
+                                >
+                                  <Link href={`/books/${book.id}`} className="flex items-center gap-3 flex-1 min-w-0">
+                                    <img
+                                      src={book.image}
+                                      alt={book.title}
+                                      className="w-9 h-12 object-cover rounded shadow-sm shrink-0"
+                                    />
+                                    <div className="min-w-0">
+                                      <p className="text-sm text-text-primary font-medium line-clamp-1">
+                                        {book.title}
+                                      </p>
+                                      <p className="text-xs text-wood-dark">{book.author}</p>
+                                    </div>
+                                  </Link>
+                                </div>
+
+                                {/* Author flyout: this author's other books with images */}
+                                {hoveredAuthor === book.author && (() => {
+                                  const authorBooks = getBooksByAuthor(book.author)
+                                  return (
+                                    <div
+                                      className="absolute top-0 left-full ml-2 w-64 bg-white border border-border-warm rounded-lg shadow-book-hover p-3 z-50"
+                                      onMouseEnter={() => setHoveredAuthor(book.author)}
+                                      onMouseLeave={() => setHoveredAuthor(null)}
+                                    >
+                                      <p className="text-xs font-semibold text-text-muted uppercase tracking-wide mb-2">
+                                        {book.author}
+                                      </p>
+                                      <div className="flex flex-col gap-2 max-h-72 overflow-y-auto">
+                                        {authorBooks.map((ab) => (
+                                          <Link
+                                            key={ab.id}
+                                            href={`/books/${ab.id}`}
+                                            className="flex items-center gap-3 px-1 py-1 rounded-md hover:bg-section-bg transition-colors"
+                                          >
+                                            <img
+                                              src={ab.image}
+                                              alt={ab.title}
+                                              className="w-8 h-11 object-cover rounded shrink-0"
+                                            />
+                                            <p className="text-xs text-text-primary line-clamp-2">{ab.title}</p>
+                                          </Link>
+                                        ))}
+                                      </div>
+                                    </div>
+                                  )
+                                })()}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
                       </div>
-                      <Link
-                        href={link.href}
-                        className="block mt-2 px-2 py-2 text-sm font-semibold text-wood-dark hover:underline"
-                      >
-                        View all {link.label} books →
-                      </Link>
-                    </div>
-                  )}
+                    )
+                  })()}
                 </div>
               ))}
               <Link

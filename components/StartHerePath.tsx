@@ -20,9 +20,9 @@ export function StartHerePath() {
       { title: 'The Sealed Nectar: Biography of the Prophet', author: 'Safiur Rahman al-Mubarakpuri', category: 'history' },
     ],
     advanced: [
-      { title: 'Tafsir Ibn Kathir (10 Vol. Set)', author: 'Imam Ismail Ibn Kathir', category: 'quran-tafsir' },
+      { title: 'Tafsir Ibn Kathir (10 Vol. Set)', author: 'Imam Ismail Ibn Kathir', category: 'tafsir' },
       { title: 'Sahih al-Bukhari (6 Vol. Set)', author: 'Imam Muhammad al-Bukhari', category: 'hadith' },
-      { title: 'The Qur\'an: A Contemporary Understanding', author: 'Dr. Muhammad Asad', category: 'quran-tafsir' },
+      { title: 'The Qur\'an: A Contemporary Understanding', author: 'Dr. Muhammad Asad', category: 'quran' },
     ],
   }
 
