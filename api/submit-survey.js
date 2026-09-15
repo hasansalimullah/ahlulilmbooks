@@ -26,7 +26,7 @@ module.exports = async (req, res) => {
       // "from" must be on a domain you've verified in Resend.
       // Until you verify ahlulilmbooks.com (or your domain), you can use
       // Resend's shared testing address below.
-      from: 'Ahlulilmbooks Survey <onboarding@resend.dev>',
+      from: 'Ahlulilmbooks Survey <survey@ahlulilmbooks.com>',
       to: process.env.SURVEY_RECIPIENT_EMAIL, // set this in Vercel env vars
       reply_to: email || undefined,
       subject: `New survey response from ${nameLine}`,
