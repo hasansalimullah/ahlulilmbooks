@@ -8,18 +8,18 @@
 <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&family=Cairo:wght@400;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #E1F0FA;
+    --cream: #F4EFE4;
     --sky-bottom: #E1F0FA;
-    --sky-top: #ffffff;
+    --sky-top: #FFFFFF;
     --card: #FFFFFF;
-    --wood: #022a45;
-    --wood-deep: #14281D;
-    --gold: #8bd1ff;
-    --gold-soft: #84ceff;
-    --text: #2075ae;
-    --muted: #4587b3;
-    --border: #4fabe8;
-    --error: #8B3A2B;
+    --wood: #163B57;
+    --wood-deep: #0E283D;
+    --gold: #3E8FC4;
+    --gold-soft: #B7DDF2;
+    --text: #22303A;
+    --muted: #5E717D;
+    --border: #D8E9F5;
+    --error: #B3413A;
   }
   * { box-sizing: border-box; }
   body {
@@ -98,7 +98,7 @@
     height: 8px;
     width: 100%;
     border-radius: 999px;
-    background: #c1e5fd;
+    background: #DCEBF6;
     overflow: hidden;
     margin-bottom: 26px;
   }
@@ -147,7 +147,7 @@
     color: var(--text);
     background: #fff;
   }
-  input::placeholder, textarea::placeholder { color: #B7AD93; }
+  input::placeholder, textarea::placeholder { color: #9DB7C6; }
   input:focus, select:focus, textarea:focus {
     outline: none;
     border-color: var(--gold);
@@ -172,7 +172,7 @@
     font-size: 13.5px;
     margin-top: 10px;
   }
-  hr.sep { border: none; border-top: 1px solid #EFE9D9; margin: 26px 0; }
+  hr.sep { border: none; border-top: 1px solid #E1EDF5; margin: 26px 0; }
   .actions {
     display: flex;
     align-items: center;
@@ -201,7 +201,7 @@
   .btn-next:hover, .btn-submit:hover { background: #0F2015; }
   .fine-print {
     text-align: center;
-    color: #A9A088;
+    color: #8FA6B3;
     font-size: 12px;
     line-height: 1.7;
     margin-top: 22px;
@@ -211,11 +211,11 @@
   .check-circle {
     width: 64px; height: 64px;
     border-radius: 50%;
-    background: #EFEADA;
+    background: #DCEBF6;
     display: flex; align-items: center; justify-content: center;
     margin: 0 auto 22px;
   }
-  .check-circle span { font-size: 28px; color: #4C6B4A; }
+  .check-circle span { font-size: 28px; color: #1F6FA3; }
   .thanks h3 { font-family: 'Baloo 2', sans-serif; font-size: 24px; color: var(--wood-deep); margin: 0 0 4px; }
   .thanks .ar-thanks { font-family: 'Amiri', serif; font-size: 22px; color: var(--wood-deep); margin: 0 0 18px; }
   .thanks p { color: var(--muted); font-size: 14.5px; line-height: 1.65; margin: 0 0 4px; }
@@ -404,13 +404,42 @@
     render();
   });
 
-  submitBtn.addEventListener('click', () => {
+  submitBtn.addEventListener('click', async () => {
     if (!isValid()) { showError(); return; }
-    // In production this posts the collected fields to your backend/API route.
-    formView.style.display = 'none';
-    thanksView.style.display = 'block';
-    progressRow.style.display = 'none';
-    progressTrack.style.display = 'none';
+
+    const payload = {
+      firstName: anonymous ? '' : firstName.value.trim(),
+      anonymous,
+      country: document.getElementById('country').value,
+      email: document.getElementById('email').value.trim(),
+      booksWanted: document.getElementById('booksWanted').value.trim(),
+      expectations: document.getElementById('expectations').value.trim(),
+      commonIssues: document.getElementById('commonIssues').value.trim(),
+      additionalNotes: document.getElementById('additionalNotes').value.trim()
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Submitting… | جارٍ الإرسال…';
+
+    try {
+      const res = await fetch('/api/submit-survey', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+      if (!res.ok) throw new Error('Request failed');
+
+      formView.style.display = 'none';
+      thanksView.style.display = 'block';
+      progressRow.style.display = 'none';
+      progressTrack.style.display = 'none';
+    } catch (err) {
+      fieldError.textContent = 'Something went wrong sending your response. Please try again. | حدث خطأ أثناء الإرسال. حاول مرة أخرى.';
+      fieldError.style.display = 'block';
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Submit Survey | إرسال الاستطلاع';
+    }
   });
 
   document.getElementById('againBtn').addEventListener('click', () => {
