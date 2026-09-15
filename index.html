@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+<title>Ahlulilmbooks | Coming Soon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&family=Inter:wght@400;500;600;700&family=Cairo:wght@400;600;700&family=Amiri:wght@700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F4EFE4;
+    --sky-bottom: #E1F0FA;
+    --sky-top: #FFFFFF;
+    --card: #FFFFFF;
+    --wood: #1E3A2B;
+    --wood-deep: #14281D;
+    --gold: #C9A227;
+    --gold-soft: #E3CE8B;
+    --text: #2C2620;
+    --muted: #6E6656;
+    --border: #E7DEC7;
+    --error: #8B3A2B;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: linear-gradient(to top, var(--sky-bottom) 0%, var(--sky-top) 100%);
+    background-attachment: fixed;
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    display: flex;
+    justify-content: center;
+    padding: 48px 18px 64px;
+    min-height: 100vh;
+  }
+  .wrap { width: 100%; max-width: 560px; }
+  .brand { text-align: center; margin-bottom: 18px; }
+  .brand .logo {
+    width: 108px;
+    height: auto;
+    margin: 0 auto 14px;
+    display: block;
+  }
+  .brand .ar-mark {
+    font-family: 'Amiri', serif;
+    font-size: 20px;
+    color: var(--gold);
+    letter-spacing: 1px;
+    margin-bottom: 2px;
+  }
+  .brand h1 {
+    font-family: 'Cairo', sans-serif;
+    font-weight: 700;
+    font-size: 30px;
+    color: var(--wood-deep);
+    margin: 0 0 6px;
+    letter-spacing: 0.5px;
+  }
+  .brand h1 .ar-name {
+    display: block;
+    font-family: 'Amiri', serif;
+    font-size: 22px;
+    color: var(--wood-deep);
+    margin-top: 4px;
+  }
+  .brand p {
+    font-size: 13.5px;
+    color: var(--muted);
+    margin: 0;
+  }
+  .divider {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin: 22px 0 26px;
+    color: var(--gold);
+  }
+  .divider .line { height: 1px; width: 56px; background: var(--gold-soft); }
+  h2.title {
+    font-family: 'Baloo 2', sans-serif;
+    font-weight: 700;
+    text-align: center;
+    color: var(--wood-deep);
+    font-size: 40px;
+    line-height: 1.15;
+    margin: 0;
+  }
+  h2.title.ar { font-family: 'Cairo', sans-serif; font-size: 34px; margin-bottom: 26px; }
+  .progress-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 6px;
+  }
+  .progress-track {
+    height: 8px;
+    width: 100%;
+    border-radius: 999px;
+    background: #E9E1CB;
+    overflow: hidden;
+    margin-bottom: 26px;
+  }
+  .progress-fill {
+    height: 100%;
+    background: var(--gold);
+    border-radius: 999px;
+    transition: width .3s ease;
+  }
+  .card {
+    background: var(--card);
+    border-radius: 20px;
+    padding: 32px 28px;
+    box-shadow: 0 10px 30px rgba(30,58,43,0.06);
+  }
+  .card h3 {
+    font-family: 'Baloo 2', sans-serif;
+    text-align: center;
+    color: var(--wood-deep);
+    font-size: 24px;
+    margin: 0 0 10px;
+  }
+  .card > .desc {
+    text-align: center;
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0 0 26px;
+  }
+  .desc .ar { display: block; direction: rtl; margin-top: 4px; font-family: 'Cairo', sans-serif; }
+  label.field-label {
+    display: block;
+    font-weight: 600;
+    color: var(--wood-deep);
+    font-size: 14.5px;
+    margin-bottom: 8px;
+  }
+  label.field-label .req { color: var(--gold); }
+  input[type=text], input[type=email], select, textarea {
+    width: 100%;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    padding: 13px 15px;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    color: var(--text);
+    background: #fff;
+  }
+  input::placeholder, textarea::placeholder { color: #B7AD93; }
+  input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px rgba(201,162,39,0.18);
+  }
+  textarea { resize: none; min-height: 110px; }
+  .anon-btn {
+    margin-top: 12px;
+    width: 100%;
+    padding: 13px 15px;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    background: #fff;
+    color: var(--wood-deep);
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .anon-btn.active { background: var(--wood-deep); border-color: var(--wood-deep); color: #fff; }
+  .field-error {
+    color: var(--error);
+    font-size: 13.5px;
+    margin-top: 10px;
+  }
+  hr.sep { border: none; border-top: 1px solid #EFE9D9; margin: 26px 0; }
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .btn-back {
+    background: none;
+    border: none;
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+    padding: 8px 4px;
+  }
+  .btn-back:disabled { opacity: .35; cursor: default; }
+  .btn-next, .btn-submit {
+    background: var(--wood-deep);
+    color: #fff;
+    border: none;
+    border-radius: 12px;
+    padding: 13px 26px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .btn-next:hover, .btn-submit:hover { background: #0F2015; }
+  .fine-print {
+    text-align: center;
+    color: #A9A088;
+    font-size: 12px;
+    line-height: 1.7;
+    margin-top: 22px;
+  }
+  .fine-print.outer { margin-top: 30px; }
+  .thanks { text-align: center; }
+  .check-circle {
+    width: 64px; height: 64px;
+    border-radius: 50%;
+    background: #EFEADA;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 auto 22px;
+  }
+  .check-circle span { font-size: 28px; color: #4C6B4A; }
+  .thanks h3 { font-family: 'Baloo 2', sans-serif; font-size: 24px; color: var(--wood-deep); margin: 0 0 4px; }
+  .thanks .ar-thanks { font-family: 'Amiri', serif; font-size: 22px; color: var(--wood-deep); margin: 0 0 18px; }
+  .thanks p { color: var(--muted); font-size: 14.5px; line-height: 1.65; margin: 0 0 4px; }
+  .thanks p.ar { direction: rtl; font-family: 'Cairo', sans-serif; margin-bottom: 22px; }
+  .btn-again {
+    margin-top: 8px;
+    background: var(--wood-deep);
+    color: #fff;
+    border: none;
+    border-radius: 999px;
+    padding: 14px 26px;
+    font-weight: 700;
+    font-size: 15px;
+    cursor: pointer;
+  }
+  .step { display: none; }
+  .step.active { display: block; }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="brand">
+    <img class="logo" src="/logo.png" alt="Ahlulilmbooks logo">
+    <div class="ar-mark" dir="rtl">أَهْلُ الْعِلْم</div>
+    <h1>Ahlulilmbooks
+      <span class="ar-name" dir="rtl">كُتُب أهل العلم</span>
+    </h1>
+    <p>Classical Islamic Books</p>
+  </div>
+
+  <div class="divider"><span class="line"></span>&#10038;<span class="line"></span></div>
+
+  <h2 class="title">Coming Soon</h2>
+  <h2 class="title ar" dir="rtl">قادمون قريباً</h2>
+
+  <div id="progressRow" class="progress-row">
+    <span id="stepLabel">Step 1 of 7</span>
+    <span id="percentLabel">14%</span>
+  </div>
+  <div id="progressTrack" class="progress-track">
+    <div id="progressFill" class="progress-fill" style="width:14%"></div>
+  </div>
+
+  <div class="card">
+    <div id="formView">
+      <h3>Share Your Thoughts | شارك أفكارك</h3>
+      <p class="desc">
+        Help us curate the best classical Islamic books for our shelves. Your feedback shapes our selection.
+        <span class="ar">ساعدنا في اختيار أفضل الكتب الإسلامية الكلاسيكية لمكتبتنا. ملاحظاتك تشكل اختياراتنا.</span>
+      </p>
+
+      <div class="step active" data-step="1">
+        <label class="field-label">First Name | الاسم الأول <span class="req">*</span></label>
+        <input type="text" id="firstName" placeholder="Muhammad | محمد">
+        <button type="button" class="anon-btn" id="anonBtn">Anonymous</button>
+      </div>
+
+      <div class="step" data-step="2">
+        <label class="field-label">Country | الدولة <span class="req">*</span></label>
+        <select id="country">
+          <option value="">Select your country | اختر دولتك</option>
+          <option>United States</option><option>United Kingdom</option><option>Canada</option>
+          <option>Saudi Arabia</option><option>United Arab Emirates</option><option>Qatar</option>
+          <option>Kuwait</option><option>Bahrain</option><option>Oman</option><option>Jordan</option>
+          <option>Egypt</option><option>Morocco</option><option>Pakistan</option><option>India</option>
+          <option>Indonesia</option><option>Malaysia</option><option>Nigeria</option><option>Other</option>
+        </select>
+      </div>
+
+      <div class="step" data-step="3">
+        <label class="field-label">Email | البريد الإلكتروني <span class="req">*</span></label>
+        <input type="email" id="email" placeholder="you@example.com">
+      </div>
+
+      <div class="step" data-step="4">
+        <label class="field-label">Books You Want | الكتب التي تريدها <span class="req">*</span></label>
+        <textarea id="booksWanted" placeholder="Which classical books are you looking for? (e.g., Riyad al-Salihin, Tafsir, Fiqh manuals, etc.) | أي كتب سلفية تبحث عنها؟"></textarea>
+      </div>
+
+      <div class="step" data-step="5">
+        <label class="field-label">Your Expectations | توقعاتك <span class="req">*</span></label>
+        <textarea id="expectations" placeholder="What do you expect from us? (e.g., authentic sourcing, fair pricing, fast shipping, knowledgeable service, etc.) | ما تتوقعه منا؟"></textarea>
+      </div>
+
+      <div class="step" data-step="6">
+        <label class="field-label">Common Issues with Other Bookstores | المشاكل الشائعة مع المكتبات الأخرى <span class="req">*</span></label>
+        <textarea id="commonIssues" placeholder="What problems have you faced? (e.g., unauthentic books, high prices, slow shipping, poor customer service, limited selection, etc.) | ما المشاكل التي واجهتها؟"></textarea>
+      </div>
+
+      <div class="step" data-step="7">
+        <label class="field-label">Additional Notes | ملاحظات إضافية</label>
+        <textarea id="additionalNotes" placeholder="Anything else you'd like to share? | أي شيء آخر تود مشاركته؟"></textarea>
+      </div>
+
+      <div id="fieldError" class="field-error" style="display:none;"></div>
+
+      <hr class="sep">
+
+      <div class="actions">
+        <button type="button" class="btn-back" id="backBtn" disabled>&#8249; Back</button>
+        <button type="button" class="btn-next" id="nextBtn">Next &#8250;</button>
+        <button type="button" class="btn-submit" id="submitBtn" style="display:none;">Submit Survey | إرسال الاستطلاع</button>
+      </div>
+
+      <p class="fine-print">By submitting, you agree to receive a one-time launch notification. No spam. | بإرسالك، أنت توافق على استلام إشعار واحد عند الإطلاق. لا رسائل مزعجة.</p>
+    </div>
+
+    <div id="thanksView" class="thanks" style="display:none;">
+      <div class="check-circle"><span>&#10003;</span></div>
+      <h3>Jaz&#257;kall&#257;hu Khayran!</h3>
+      <p class="ar-thanks" dir="rtl">جَزَاكُمُ اللَّهُ خَيْراً</p>
+      <p>Your response has been submitted successfully. Our team will review your input carefully as we prepare for launch.</p>
+      <p class="ar">تم إرسال ردك بنجاح. سيقوم فريقنا بمراجعة مداخلاتك بعناية أثناء استعدادنا للإطلاق.</p>
+      <button type="button" class="btn-again" id="againBtn">Submit Another Response | إرسال رد آخر</button>
+    </div>
+  </div>
+
+  <p class="fine-print outer">No spam. Just a single note when we open our doors. | لا رسائل مزعجة. فقط إشعار واحد عند فتح أبوابنا.</p>
+</div>
+
+<script>
+  const TOTAL = 7;
+  let step = 1;
+  let anonymous = false;
+  const data = {};
+
+  const progressRow = document.getElementById('progressRow');
+  const progressTrack = document.getElementById('progressTrack');
+  const stepLabel = document.getElementById('stepLabel');
+  const percentLabel = document.getElementById('percentLabel');
+  const progressFill = document.getElementById('progressFill');
+  const backBtn = document.getElementById('backBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const submitBtn = document.getElementById('submitBtn');
+  const fieldError = document.getElementById('fieldError');
+  const formView = document.getElementById('formView');
+  const thanksView = document.getElementById('thanksView');
+  const anonBtn = document.getElementById('anonBtn');
+  const firstName = document.getElementById('firstName');
+
+  anonBtn.addEventListener('click', () => {
+    anonymous = !anonymous;
+    anonBtn.classList.toggle('active', anonymous);
+    firstName.disabled = anonymous;
+    if (anonymous) firstName.value = '';
+  });
+
+  function render() {
+    document.querySelectorAll('.step').forEach(s => {
+      s.classList.toggle('active', Number(s.dataset.step) === step);
+    });
+    stepLabel.textContent = `Step ${step} of ${TOTAL}`;
+    const pct = Math.round((step / TOTAL) * 100);
+    percentLabel.textContent = pct + '%';
+    progressFill.style.width = pct + '%';
+    backBtn.disabled = step === 1;
+    nextBtn.style.display = step < TOTAL ? 'inline-block' : 'none';
+    submitBtn.style.display = step === TOTAL ? 'inline-block' : 'none';
+    fieldError.style.display = 'none';
+  }
+
+  function isValid() {
+    switch (step) {
+      case 1: return anonymous || firstName.value.trim().length > 0;
+      case 2: return document.getElementById('country').value.trim().length > 0;
+      case 3: return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(document.getElementById('email').value.trim());
+      case 4: return document.getElementById('booksWanted').value.trim().length > 0;
+      case 5: return document.getElementById('expectations').value.trim().length > 0;
+      case 6: return document.getElementById('commonIssues').value.trim().length > 0;
+      default: return true;
+    }
+  }
+
+  function showError() {
+    fieldError.textContent = 'Please fill out this field before continuing. | الرجاء تعبئة هذا الحقل للمتابعة.';
+    fieldError.style.display = 'block';
+  }
+
+  nextBtn.addEventListener('click', () => {
+    if (!isValid()) { showError(); return; }
+    step = Math.min(step + 1, TOTAL);
+    render();
+  });
+
+  backBtn.addEventListener('click', () => {
+    step = Math.max(step - 1, 1);
+    render();
+  });
+
+  submitBtn.addEventListener('click', () => {
+    if (!isValid()) { showError(); return; }
+    // In production this posts the collected fields to your backend/API route.
+    formView.style.display = 'none';
+    thanksView.style.display = 'block';
+    progressRow.style.display = 'none';
+    progressTrack.style.display = 'none';
+  });
+
+  document.getElementById('againBtn').addEventListener('click', () => {
+    step = 1;
+    anonymous = false;
+    anonBtn.classList.remove('active');
+    firstName.disabled = false;
+    document.querySelectorAll('input, select, textarea').forEach(el => el.value = '');
+    formView.style.display = 'block';
+    thanksView.style.display = 'none';
+    progressRow.style.display = 'flex';
+    progressTrack.style.display = 'block';
+    render();
+  });
+
+  render();
+</script>
+</body>
+</html>
